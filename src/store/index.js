@@ -1,27 +1,31 @@
-/* import Vue from 'vue';
+import Vue from 'vue';
 import Vuex from 'vuex';
+
+import actions from './actions';
+import mutations from './mutations';
+
 
 Vue.use(Vuex);
 
-let store = new Vuex.Store({
-    state:{
-			isLeftOn: false,
-			isRightOn: false
-    },
+const state = {
+	article: {
+		date: {
+			curr: "",
+			prev: "",
+			next: ""
+		},
+		author: "",
+		title: "",
+		digest: "",
+		wc: 0,
+		content: ""
+	},
+	navLeftOn: false,
+	navRightOn: false
+}
 
-    getters:{
-        isLeftOn: state => state.isLeftOn,
-				isRightOn: state => state.isRightOn
-    },
-    mutations:{
-			toggleLeft: state => {
-				state.isLeftOn = !state.isLeftOn;
-			},
-			toggleRight: state => {
-				state.isRightOn = !state.isRightOn;
-			}
-    },
-    actions:{}
+export default new Vuex.Store({
+	state,
+	actions,
+	mutations
 });
-
-export default store; */

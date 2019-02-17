@@ -24,9 +24,13 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex';
+	import {mapMutations} from 'vuex';
+
 	import navLeft from '@/components/left/left';
 	import navRight from '@/components/right/right';
 	import article from '@/components/article/article';
+
 
 	export default {
 		name: 'App',
@@ -38,51 +42,42 @@
 				navRightWidth: 20,
 				flagLeft: false,
 				flagRight: false,
-				article: {
-					date: {
-						curr: "",
-						prev: "",
-						next: ""
-					},
-					author: "",
-					title: "",
-					digest: "",
-					wc: 0,
-					"content": ""
-				}
 			};
 		},
+		computed: {
+			...mapState([
+				'article',
+				'navLeftOn',
+				'navRightOn'
+			])
+		},
 		created() {
-			this.$http.get('https://interface.meiriyiwen.com/article/random?dev=1').then(response => {
-				this.article = response.body.data;
-			})
+
 		},
 		components: {
 			'v-nav-left': navLeft,
 			'v-nav-right': navRight,
 			'v-article': article
 		},
-		methods: {
-			leftToggle() {
-				this.flagLeft = !this.flagLeft;
+		watch: {
+			navLeftOn(newValue) {
 				let left = this.$refs.left;
 				let main = this.$refs.main;
-				if (this.flagLeft) {
+				if(newValue) {
 					left.style.left = '0';
 					main.style.left = this.navLeftWidth + 'vw';
 					main.style.overflowY = 'hidden';
-				} else {
+				}else{
 					left.style.left = -this.navLeftWidth + 'vw';
 					main.style.left = '0';
 					main.style.overflowY = '';
 				}
 			},
-			rightToggle() {
-				this.flagRight = !this.flagRight;
+			navRightOn(newValue) {
 				let right = this.$refs.right;
 				let mask = this.$refs.mask;
 				let main = this.$refs.main;
-				if (this.flagRight) {
+				if(newValue) {
 					mask.style.display = 'block';
 					right.style.left = (100 - this.navRightWidth) + 'vw';
 					main.style.overflowY = 'hidden';
@@ -91,12 +86,18 @@
 					right.style.left = '100vw';
 					main.style.overflowY = '';
 				}
-			},
+			}
+		},
+		methods: {
+			...mapMutations([
+				'leftToggle',
+				'rightToggle'
+			]),
 			checkToggleLeft() {
-				if (this.flagLeft) {
+				if (this.navLeftOn) {
 					this.leftToggle();
 				}
-			}
+			},
 		}
 	}
 </script>
