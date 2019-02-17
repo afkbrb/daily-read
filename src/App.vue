@@ -1,21 +1,19 @@
 <template>
 	<div id="app">
-		<div class="left-main" ref="leftMain">
-			<div class="left" ref="left">
-				<v-nav-left></v-nav-left>
+		<div class="left" ref="left">
+			<v-nav-left></v-nav-left>
+		</div>
+		<div class="main" @click="checkToggleLeft" ref="main">
+			<div class="header">
+				<span class="left-toggle" @click.stop="leftToggle">
+					<i class="iconfont icon-hamburger"></i>
+				</span>
+				<span class="right-toggle" @click.stop="rightToggle">
+					<i class="iconfont icon-more"></i>
+				</span>
 			</div>
-			<div class="main" @click="checkToggleLeft">
-				<div class="header">
-					<span class="left-toggle" @click.stop="leftToggle">
-						<i class="iconfont icon-hamburger"></i>
-					</span>
-					<span class="right-toggle" @click.stop="rightToggle">
-						<i class="iconfont icon-more"></i>
-					</span>
-				</div>
-				<div class="article-wrapper">
-					<v-article :article="article"></v-article>
-				</div>
+			<div class="article-wrapper">
+				<v-article :article="article"></v-article>
 			</div>
 		</div>
 		<div class="right" ref="right">
@@ -68,23 +66,31 @@
 		methods: {
 			leftToggle() {
 				this.flagLeft = !this.flagLeft;
-				let leftMain = this.$refs.leftMain;
+				let left = this.$refs.left;
+				let main = this.$refs.main;
 				if (this.flagLeft) {
-					leftMain.style.left = '0';
+					left.style.left = '0';
+					main.style.left = this.navLeftWidth + 'vw';
+					main.style.overflowY = 'hidden';
 				} else {
-					leftMain.style.left = -this.navLeftWidth + 'vw';
+					left.style.left = -this.navLeftWidth + 'vw';
+					main.style.left = '0';
+					main.style.overflowY = '';
 				}
 			},
 			rightToggle() {
 				this.flagRight = !this.flagRight;
 				let right = this.$refs.right;
 				let mask = this.$refs.mask;
+				let main = this.$refs.main;
 				if (this.flagRight) {
 					mask.style.display = 'block';
 					right.style.left = (100 - this.navRightWidth) + 'vw';
+					main.style.overflowY = 'hidden';
 				} else {
 					mask.style.display = 'none';
 					right.style.left = '100vw';
+					main.style.overflowY = '';
 				}
 			},
 			checkToggleLeft() {
@@ -103,54 +109,48 @@
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
-		.left-main {
-			position: absolute;
+		.left {
+			position: fixed;
 			top: 0;
 			left: -$nav-left-width;
-			background: $main-color;
-			width: 100vw + $nav-left-width;
-			height: 100vh;
-			transition: linear 0.2s;
+			background: $nav-color;
+			width: $nav-left-width;
+			height: 100%;
+			transition: $left-main-transition;
+		}
 
-			.left {
-				position: fixed;
-				float: left;
-				background: $nav-color;
-				width: $nav-left-width;
-				height: 100%;
+		.main {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: $main-color;
+			transition: $left-main-transition;
+
+			.header {
+				position: relative;
+				z-index: 50;
+				text-decoration: none;
+				color: $header-icon-color;
+				font-size: 1.5rem;
+				height: 3rem;
+
+				.left-toggle {
+					position: absolute;
+					top: 2vh;
+					left: 2.5vw;
+				}
+
+				.right-toggle {
+					position: absolute;
+					top: 2vh;
+					right: 4vw;
+				}
 			}
 
-			.main {
-				position: relative;
-				float: right;
-				width: 100vw;
-				min-height: 100%;
-				background: $main-color;
-
-				.header {
-					position: relative;
-					z-index: 50;
-					text-decoration: none;
-					color: $header-icon-color;
-					font-size: 1.5rem;
-					height: 3rem;
-
-					.left-toggle {
-						position: absolute;
-						top: 2vh;
-						left: 2.5vw;
-					}
-
-					.right-toggle {
-						position: absolute;
-						top: 2vh;
-						right: 4vw;
-					}
-				}
-				
-				.article-wrapper{
-					padding: 0 0.5rem;
-				}
+			.article-wrapper {
+				padding: 0 0.5rem;
 			}
 		}
 
@@ -158,7 +158,7 @@
 			position: fixed;
 			z-index: 200;
 			width: $nav-right-width;
-			height: 100vh;
+			height: 100%;
 			left: 100vw;
 			top: 0;
 			background: $nav-color;
@@ -169,8 +169,8 @@
 			position: fixed;
 			display: none;
 			z-index: 100;
-			width: 100vw;
-			height: 100vh;
+			width: 100%;
+			height: 100%;
 			left: 0;
 			top: 0;
 			background: $mask-color;
