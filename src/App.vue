@@ -54,7 +54,6 @@
 		},
 		created() {
 			this.$http.get('https://interface.meiriyiwen.com/article/random?dev=1').then(response => {
-				// console.log(response.body.data);
 				this.article = response.body.data;
 			})
 		},

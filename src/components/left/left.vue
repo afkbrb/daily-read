@@ -1,13 +1,13 @@
 <template>
 	<div class="nav-left">
 		<ul class="list">
-			<li class="item">
+			<li class="item border-1px">
 				<i class="iconfont icon-tag"></i>我的收藏
 			</li>
-			<li class="item">
+			<li class="item border-1px">
 				<i class="iconfont icon-setting"></i>阅读设置
 			</li>
-			<li class="item">
+			<li class="item border-1px">
 				<i class="iconfont icon-good"></i>给个好评
 			</li>
 		</ul>
@@ -34,7 +34,7 @@
 
 			.item {
 				padding: 1rem 0 1rem 1rem;
-				border-bottom: 1px solid $nav-border-color;
+				@include border-1px($nav-border-color);
 
 				i {
 					padding-right: 1rem;

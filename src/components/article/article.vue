@@ -1,8 +1,8 @@
 <template>
 		<div class="article">
-			<div class="title">{{article.title}}</div>
+			<div class="title border-1px">{{article.title}}</div>
 			<div class="author">{{article.author}}</div>
-			<div class="content" v-html="article.content">
+			<div class="content border-1px" v-html="article.content">
 				{{article.content}}
 			</div>
 			<div class="foot">全文完 共{{article.wc}}字</div>
@@ -37,7 +37,7 @@
 			font-size: 1.3rem;
 			font-weight: 500;
 			padding-bottom: 0.5rem;
-			border-bottom: 1px solid $article-title-border-color;
+			@include border-1px($article-title-border-color);
 		}
 
 		.author {
@@ -51,7 +51,9 @@
 		.content{
 			font-size: 1rem;
 			font-weight: 400;
-			
+			padding-bottom: 1rem;
+			@include border-1px($article-foot-border-color);
+
 			p{
 				text-indent: 2rem;
 			}
@@ -63,9 +65,7 @@
 			font-weight: 100;
 			color: $article-foot-color;
 			padding-top: 1rem;
-			padding-bottom: 1rem;
-			border-top: 1px solid $article-foot-border-color;
-			
+			padding-bottom: 1rem;			
 		}
 	}
 </style>
