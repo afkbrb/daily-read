@@ -7,5 +7,8 @@ export default {
 	},
 	rightToggle: state => {
 		state.navRightOn = !state.navRightOn;
+	},
+	init: state => {
+		state.inited = true;
 	}
 }

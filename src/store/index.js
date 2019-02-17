@@ -4,10 +4,12 @@ import Vuex from 'vuex';
 import actions from './actions';
 import mutations from './mutations';
 
-
 Vue.use(Vuex);
 
 const state = {
+	navLeftOn: false,
+	navRightOn: false,
+	inited: false,
 	article: {
 		date: {
 			curr: "",
@@ -19,10 +21,8 @@ const state = {
 		digest: "",
 		wc: 0,
 		content: ""
-	},
-	navLeftOn: false,
-	navRightOn: false
-}
+	}
+};
 
 export default new Vuex.Store({
 	state,

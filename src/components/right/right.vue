@@ -27,13 +27,13 @@
 					随机
 				</div>
 			</li>
-			<li class="item" @click="getArticleTomorrow">
+			<li v-show="showTomorrow" class="item" @click="getArticleTomorrow">
 				<div class="icon">
 					<i class="iconfont icon-right"></i>
 				</div>
 				<div class="text">后一天</div>
 			</li>
-			<li class="item" @click="getArticleToday">
+			<li v-show="showToday" class="item" @click="getArticleToday">
 				<div class="icon">
 					<i class="iconfont icon-clock"></i>
 				</div>
@@ -47,21 +47,40 @@
 
 <script>
 	import {mapMutations} from 'vuex';
+	import {mapState} from 'vuex';
 
 	export default {
 		name: 'right',
 		created() {
+			this.today = this.getFormatDateToday();
 			this.getArticleToday();
+		},
+		computed: {
+			...mapState([
+				'inited'
+			]),
+			showToday() {
+				return this.today !== this.$store.state.article.date.curr;
+			},
+			showTomorrow() {
+				return parseInt(this.today) > parseInt(this.$store.state.article.date.curr);
+			}
 		},
 		methods: {
 			...mapMutations([
 				'updateArticle',
-				'rightToggle'
+				'rightToggle',
+				'init'
 			]),
 			getArticleToday() {
 				this.$http.get('https://interface.meiriyiwen.com/article/today?dev=1').then(response => {
 					this.updateArticle(response.body.data);
-					//todo: cannot just call rightToggle here in case of bugs while initializing
+					//to prevent the right nav from auto-expanding while initializing
+					if(this.inited) {
+						this.rightToggle();
+					}else{
+						this.init();
+					}
 				});
 			},
 			getArticleRandom() {
@@ -83,6 +102,19 @@
 			getArticleTomorrow() {
 				let date = this.$store.state.article.date.next;
 				this.getArticleByDate(date);
+			},
+			getFormatDateToday() {
+				let date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				};
+				if (day >= 0 && day <= 9) {
+					day = "0" + day;
+				};
+				return (year + month + day);
 			}
 		},
 	}
