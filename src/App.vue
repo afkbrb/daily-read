@@ -13,13 +13,8 @@
 						<i class="iconfont icon-more"></i>
 					</span>
 				</div>
-				<div class="article">
-					<div class="title">{{article.title}}</div>
-					<div class="author">{{article.author}}</div>
-					<div class="content" v-html="article.content">
-						{{article.content}}
-					</div>
-					<div class="foot">全文完 共{{article.wc}}字</div>
+				<div class="article-wrapper">
+					<v-article :article="article"></v-article>
 				</div>
 			</div>
 		</div>
@@ -31,10 +26,10 @@
 </template>
 
 <script>
-	
 	import navLeft from '@/components/left/left';
 	import navRight from '@/components/right/right';
-	
+	import article from '@/components/article/article';
+
 	export default {
 		name: 'App',
 		data() {
@@ -67,7 +62,8 @@
 		},
 		components: {
 			'v-nav-left': navLeft,
-			'v-nav-right': navRight
+			'v-nav-right': navRight,
+			'v-article': article
 		},
 		methods: {
 			leftToggle() {
@@ -103,6 +99,7 @@
 <style lang="scss">
 	@import './assets/fonts/iconfont.css';
 	@import './assets/scss/index.scss';
+
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
@@ -113,15 +110,14 @@
 			background: $main-color;
 			width: 100vw + $nav-left-width;
 			height: 100vh;
-			transition: ease-in 0.2s;
+			transition: linear 0.2s;
 
 			.left {
+				position: fixed;
 				float: left;
 				background: $nav-color;
 				width: $nav-left-width;
 				height: 100%;
-				
-				// padding-top: 4vh;
 			}
 
 			.main {
@@ -132,10 +128,12 @@
 				background: $main-color;
 
 				.header {
-
+					position: relative;
+					z-index: 50;
 					text-decoration: none;
 					color: $header-icon-color;
 					font-size: 1.5rem;
+					height: 3rem;
 
 					.left-toggle {
 						position: absolute;
@@ -149,11 +147,15 @@
 						right: 4vw;
 					}
 				}
+				
+				.article-wrapper{
+					padding: 0 0.5rem;
+				}
 			}
 		}
 
 		.right {
-			position: absolute;
+			position: fixed;
 			z-index: 200;
 			width: $nav-right-width;
 			height: 100vh;
@@ -164,7 +166,7 @@
 		}
 
 		.mask {
-			position: absolute;
+			position: fixed;
 			display: none;
 			z-index: 100;
 			width: 100vw;

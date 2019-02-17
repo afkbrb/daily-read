@@ -21,23 +21,22 @@
 </script>
 
 <style lang="scss">
-	
 	@import '../../assets/scss/index.scss';
-	
-	.nav-left{
-		.list{
+
+	.nav-left {
+		.list {
 			list-style: none;
 			padding-left: 0;
 			padding-top: 2vh;
 			color: $nav-text-color;
 			font-weight: 100;
 			font-size: 0.9rem;
-			
-			.item{
+
+			.item {
 				padding: 1rem 0 1rem 1rem;
 				border-bottom: 1px solid $nav-border-color;
-				
-				i{
+
+				i {
 					padding-right: 1rem;
 				}
 			}
