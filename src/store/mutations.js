@@ -14,8 +14,14 @@ export default {
 	bottomToggle: state => {
 		state.padBottomOn = !state.padBottomOn;
 	},
-	maskToggle: state => {
-		state.maskOn = !state.maskOn;
+	leftMaskToggle: state => {
+		state.leftMaskOn = !state.leftMaskOn;
+	},
+	rightMaskToggle: state => {
+		state.rightMaskOn = !state.rightMaskOn;
+	},
+	bottomMaskToggle: state => {
+		state.bottomMaskOn = !state.bottomMaskOn;
 	},
 	openSetting: state => {
 		state.bottomContent = 'setting';

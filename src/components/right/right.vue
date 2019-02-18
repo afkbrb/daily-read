@@ -72,13 +72,16 @@
 				'updateArticle',
 				'rightToggle',
 				'bottomToggle',
-				'maskToggle',
+				'rightMaskToggle',
+				'bottomMaskToggle',
 				'openShare'
 			]),
 			handleOpenShare() {
 				this.openShare();
 				this.bottomToggle();
 				this.rightToggle();
+				this.bottomMaskToggle();
+				this.rightMaskToggle();
 			},
 			getArticleToday() {
 				this.$http.get('https://interface.meiriyiwen.com/article/today?dev=1').then(response => {
@@ -86,7 +89,7 @@
 					//to prevent the right nav from auto-expanding while initializing
 					if(this.inited) {
 						this.rightToggle();
-						this.maskToggle();
+						this.rightMaskToggle();
 					}else{
 						this.init();
 					}
@@ -96,14 +99,14 @@
 				this.$http.get('https://interface.meiriyiwen.com/article/random?dev=1').then(response => {
 					this.updateArticle(response.body.data);
 					this.rightToggle();
-					this.maskToggle();
+					this.rightMaskToggle();
 				});
 			},
 			getArticleByDate(date) {
 				this.$http.get(`https://interface.meiriyiwen.com/article/day?dev=1&date=${date}`).then(response => {
 					this.updateArticle(response.body.data);
 					this.rightToggle();
-					this.maskToggle();
+					this.rightMaskToggle();
 				});
 			},
 			getArticleYesterday() {

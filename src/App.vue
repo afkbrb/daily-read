@@ -3,7 +3,7 @@
 		<div class="left" ref="left">
 			<v-nav-left></v-nav-left>
 		</div>
-		<div class="main" @click="checkToggleLeftOrBottom" ref="main">
+		<div class="main" ref="main">
 			<div class="header-wrapper">
 				<v-header :showHeaderTitle="showHeaderTitle"></v-header>
 			</div>
@@ -14,12 +14,15 @@
 		<div class="right" ref="right">
 			<v-nav-right></v-nav-right>
 		</div>
-		<div class="mask" ref="mask" @click="checkToggleRightOrBottom"></div>
 		<div class="bottom-wrapper" ref="bottom">
 			<!-- <v-share-pad></v-share-pad> -->
 			<v-setting-pad v-if="bottomContent==='setting'"></v-setting-pad>
 			<v-share-pad v-if="bottomContent==='share'"></v-share-pad>
 		</div>
+		<div v-show="leftMaskOn" class="mask left" @click="handleLeft"></div>
+		<div v-show="rightMaskOn" class="mask right" @click="handleRight"></div>
+		<div v-show="bottomMaskOn" class="mask bottom" @click="handleBottom"></div>
+
 	</div>
 
 </template>
@@ -51,12 +54,14 @@
 		},
 		computed: {
 			...mapState([
+				'bottomContent',
 				'article',
 				'navLeftOn',
 				'navRightOn',
 				'padBottomOn',
-				'maskOn',
-				'bottomContent'
+				'leftMaskOn',
+				'rightMaskOn',
+				'bottomMaskOn'
 			])
 		},
 		components: {
@@ -75,7 +80,7 @@
 				if(newValue) {
 					left.style.left = '0';
 					main.style.left = this.navLeftWidth + 'vw';
-					articleWrapper.style.overflowY = 'hidden';
+					articleWrapper.style.overflowY = 'hidden';//prevent main from scrolling
 				}else{
 					left.style.left = -this.navLeftWidth + 'vw';
 					main.style.left = '0';
@@ -87,7 +92,7 @@
 				let main = this.$refs.main;
 				if(newValue) {
 					right.style.left = (100 - this.navRightWidth) + 'vw';
-					main.style.overflowY = 'hidden';
+					main.style.overflowY = 'hidden';//prevent main from scrolling
 				} else {
 					right.style.left = '100vw';
 					main.style.overflowY = '';
@@ -100,14 +105,6 @@
 				}else{
 					bottom.style.top = '100vh';
 				}
-			},
-			maskOn(newValue) {
-				let mask = this.$refs.mask;
-				if(newValue) {
-					mask.style.display = 'block';
-				}else{
-					mask.style.display = 'none';
-				}
 			}
 		},
 		methods: {
@@ -115,26 +112,25 @@
 				'leftToggle',
 				'rightToggle',
 				'bottomToggle',
-				'maskToggle'
+				'leftMaskToggle',
+				'rightMaskToggle',
+				'bottomMaskToggle'
 			]),
-			checkToggleLeftOrBottom() {
-				if (this.navLeftOn) {
-					this.leftToggle();
-				}else if(this.padBottomOn){
-					this.bottomToggle();
-				}
-			},
-			checkToggleRightOrBottom() {
-				if (this.navRightOn) {
-					this.rightToggle();
-				}else{
-					this.bottomToggle();
-				}
-				this.maskToggle();
-			},
 			handleScroll() {
 				let scrollTop = this.$refs.articleWrapper.scrollTop;
 				this.showHeaderTitle = (scrollTop >= this.scrollOffset);
+			},
+			handleLeft() {
+				this.leftToggle();
+				this.leftMaskToggle();
+			},
+			handleRight() {
+				this.rightToggle();
+				this.rightMaskToggle();
+			},
+			handleBottom() {
+				this.bottomToggle();
+				this.bottomMaskToggle();
 			}
 		}
 	}
@@ -209,13 +205,23 @@
 		.mask {
 			z-index: 100;
 			position: absolute;
-			display: none;
-			z-index: 100;
 			width: 100%;
 			height: 100%;
 			left: 0;
 			top: 0;
-			background: $mask-color;
+			
+			&.left{
+				background: $left-mask-color;
+			}
+			
+			&.right{
+				background: $right-mask-color;
+			}
+			
+			&.bottom{
+				background: $bottom-mask-color;
+			}
+			
 		}
 	}
 </style>

@@ -24,12 +24,16 @@
 			...mapMutations([
 				'openSetting',
 				'leftToggle',
-				'bottomToggle'
+				'bottomToggle',
+				'leftMaskToggle',
+				'bottomMaskToggle'
 			]),
 			handleOpenSetting() {
 				this.openSetting();
 				this.leftToggle();
 				this.bottomToggle();
+				this.leftMaskToggle();
+				this.bottomMaskToggle();
 			}
 		},
 	}

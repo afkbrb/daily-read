@@ -1,9 +1,9 @@
 <template>
 	<div class="header">
-		<span class="left-toggle" @click.stop="leftToggle">
+		<span class="left-toggle" @click.stop="handleLeftToggle">
 			<i class="iconfont icon-hamburger"></i>
 		</span>
-		<span class="right-toggle" @click.stop="openRight">
+		<span class="right-toggle" @click.stop="handleRightToggle">
 			<i class="iconfont icon-more"></i>
 		</span>
 		<div v-show="showHeaderTitle" class="header-title">
@@ -31,11 +31,16 @@
 			...mapMutations([
 				'leftToggle',
 				'rightToggle',
-				'maskToggle'
+				'leftMaskToggle',
+				'rightMaskToggle'
 			]),
-			openRight() {
+			handleLeftToggle() {
+				this.leftToggle();
+				this.leftMaskToggle();
+			},
+			handleRightToggle() {
 				this.rightToggle();
-				this.maskToggle();
+				this.rightMaskToggle();
 			}
 		},
 	}

@@ -7,12 +7,14 @@ import mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
+	inited: false,
+	bottomContent: 'setting',
 	navLeftOn: false,
 	navRightOn: false,
 	padBottomOn: false,	
-	bottomContent: 'setting',
-	maskOn: false,
-	inited: false,
+	leftMaskOn: false,
+	rightMaskOn: false,
+	bottomMaskOn: false,
 	article: {
 		date: {
 			curr: "",
