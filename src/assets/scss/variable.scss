@@ -3,13 +3,15 @@ $nav-left-width: 36vw;
 $nav-right-width: 20vw;
 
 // color
-$header-icon-color: #9e9e9e;
 $nav-color: #333333;
 $nav-text-color: #dddddd;
 $nav-icon-color:  $nav-text-color;
 $nav-border-color: #2a2a2a;
 $mask-color: rgba(120, 120, 120, 0.1);
 $main-color: #fbfbfb;
+$header-color: $main-color;
+$header-title-color: #888888;
+$header-icon-color: #9e9e9e;
 $article-title-border-color: rgba(7,17,27,0.1);
 $article-author-color: #888888;
 $article-foot-color: #888888;

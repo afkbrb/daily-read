@@ -24,8 +24,13 @@ const state = {
 	}
 };
 
+const getters = {
+	articleTitle: state => state.article.title
+}
+
 export default new Vuex.Store({
 	state,
+	getters,
 	actions,
 	mutations
 });

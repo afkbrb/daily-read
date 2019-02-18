@@ -4,15 +4,10 @@
 			<v-nav-left></v-nav-left>
 		</div>
 		<div class="main" @click="checkToggleLeft" ref="main">
-			<div class="header">
-				<span class="left-toggle" @click.stop="leftToggle">
-					<i class="iconfont icon-hamburger"></i>
-				</span>
-				<span class="right-toggle" @click.stop="rightToggle">
-					<i class="iconfont icon-more"></i>
-				</span>
+			<div class="header-wrapper">
+				<v-header :showHeaderTitle="showHeaderTitle"></v-header>
 			</div>
-			<div class="article-wrapper">
+			<div class="article-wrapper" ref="articleWrapper" @scroll="handleScroll">
 				<v-article :article="article"></v-article>
 			</div>
 		</div>
@@ -30,6 +25,7 @@
 	import navLeft from '@/components/left/left';
 	import navRight from '@/components/right/right';
 	import article from '@/components/article/article';
+	import header from '@/components/header/header';
 
 
 	export default {
@@ -42,6 +38,8 @@
 				navRightWidth: 20,
 				flagLeft: false,
 				flagRight: false,
+				scrollOffset: 60,
+				showHeaderTitle: false
 			};
 		},
 		computed: {
@@ -51,13 +49,11 @@
 				'navRightOn'
 			])
 		},
-		created() {
-
-		},
 		components: {
 			'v-nav-left': navLeft,
 			'v-nav-right': navRight,
-			'v-article': article
+			'v-article': article,
+			'v-header': header
 		},
 		watch: {
 			navLeftOn(newValue) {
@@ -98,6 +94,10 @@
 					this.leftToggle();
 				}
 			},
+			handleScroll() {
+				let scrollTop = this.$refs.articleWrapper.scrollTop;
+				this.showHeaderTitle = (scrollTop >= this.scrollOffset);
+			}
 		}
 	}
 </script>
@@ -128,29 +128,23 @@
 			background: $main-color;
 			transition: $left-main-transition;
 
-			.header {
-				position: relative;
+			.header-wrapper{
+				position: fixed;
+				top: 0;
 				z-index: 50;
-				text-decoration: none;
-				color: $header-icon-color;
-				font-size: 1.5rem;
 				height: 3rem;
-
-				.left-toggle {
-					position: absolute;
-					top: 2vh;
-					left: 2.5vw;
-				}
-
-				.right-toggle {
-					position: absolute;
-					top: 2vh;
-					right: 4vw;
-				}
+				width: 100%;
 			}
 
 			.article-wrapper {
-				padding: 0 0.5rem;
+				margin: 8vh 0.5rem 0 0.5rem;
+				height: 92vh;
+				overflow-y: scroll;
+				&::-webkit-scrollbar{
+					// width: 0;
+					// display: none;
+					width: 0;
+				}
 			}
 		}
 
