@@ -4,7 +4,7 @@
 			<li class="item border-1px">
 				<i class="iconfont icon-tag"></i>我的收藏
 			</li>
-			<li class="item border-1px">
+			<li class="item border-1px" @click="handleOpenSetting">
 				<i class="iconfont icon-setting"></i>阅读设置
 			</li>
 			<li class="item border-1px">
@@ -15,8 +15,23 @@
 </template>
 
 <script>
+	
+	import {mapMutations} from 'vuex';
+	
 	export default {
-		name: 'left'
+		name: 'left',
+		methods: {
+			...mapMutations([
+				'openSetting',
+				'leftToggle',
+				'bottomToggle'
+			]),
+			handleOpenSetting() {
+				this.openSetting();
+				this.leftToggle();
+				this.bottomToggle();
+			}
+		},
 	}
 </script>
 

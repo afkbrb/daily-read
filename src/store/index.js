@@ -10,6 +10,7 @@ const state = {
 	navLeftOn: false,
 	navRightOn: false,
 	padBottomOn: false,	
+	bottomContent: 'setting',
 	maskOn: false,
 	inited: false,
 	article: {

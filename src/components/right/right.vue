@@ -7,7 +7,7 @@
 				</div>
 				<div class="text">收藏</div>
 			</li>
-			<li class="item" @click="openBottom">
+			<li class="item" @click="handleOpenShare">
 				<div class="icon">
 					<i class="iconfont icon-share"></i>
 				</div>
@@ -68,13 +68,15 @@
 		},
 		methods: {
 			...mapMutations([
+				'init',
 				'updateArticle',
 				'rightToggle',
 				'bottomToggle',
 				'maskToggle',
-				'init'
+				'openShare'
 			]),
-			openBottom() {
+			handleOpenShare() {
+				this.openShare();
 				this.bottomToggle();
 				this.rightToggle();
 			},

@@ -1,4 +1,7 @@
 export default {
+	init: state => {
+		state.inited = true;
+	},
 	updateArticle: (state, article) => {
 		state.article = article;
 	},
@@ -14,7 +17,10 @@ export default {
 	maskToggle: state => {
 		state.maskOn = !state.maskOn;
 	},
-	init: state => {
-		state.inited = true;
+	openSetting: state => {
+		state.bottomContent = 'setting';
+	},
+	openShare: state => {
+		state.bottomContent = 'share';
 	}
 }

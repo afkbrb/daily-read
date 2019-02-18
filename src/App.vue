@@ -3,7 +3,7 @@
 		<div class="left" ref="left">
 			<v-nav-left></v-nav-left>
 		</div>
-		<div class="main" @click="checkToggleLeft" ref="main">
+		<div class="main" @click="checkToggleLeftOrBottom" ref="main">
 			<div class="header-wrapper">
 				<v-header :showHeaderTitle="showHeaderTitle"></v-header>
 			</div>
@@ -16,7 +16,9 @@
 		</div>
 		<div class="mask" ref="mask" @click="checkToggleRightOrBottom"></div>
 		<div class="bottom-wrapper" ref="bottom">
-			<v-share-apd></v-share-apd>
+			<!-- <v-share-pad></v-share-pad> -->
+			<v-setting-pad v-if="bottomContent==='setting'"></v-setting-pad>
+			<v-share-pad v-if="bottomContent==='share'"></v-share-pad>
 		</div>
 	</div>
 
@@ -31,6 +33,7 @@
 	import article from '@/components/article/article';
 	import header from '@/components/header/header';
 	import sharePad from '@/components/bottom/sharePad';
+	import settingPad from '@/components/bottom/settingPad';
 
 
 	export default {
@@ -52,7 +55,8 @@
 				'navLeftOn',
 				'navRightOn',
 				'padBottomOn',
-				'maskOn'
+				'maskOn',
+				'bottomContent'
 			])
 		},
 		components: {
@@ -60,7 +64,8 @@
 			'v-nav-right': navRight,
 			'v-article': article,
 			'v-header': header,
-			'v-share-apd': sharePad
+			'v-share-pad': sharePad,
+			'v-setting-pad': settingPad
 		},
 		watch: {
 			navLeftOn(newValue) {
@@ -112,9 +117,11 @@
 				'bottomToggle',
 				'maskToggle'
 			]),
-			checkToggleLeft() {
+			checkToggleLeftOrBottom() {
 				if (this.navLeftOn) {
 					this.leftToggle();
+				}else if(this.padBottomOn){
+					this.bottomToggle();
 				}
 			},
 			checkToggleRightOrBottom() {
@@ -192,7 +199,7 @@
 		.bottom-wrapper{
 			z-index: 200;
 			position: fixed;
-			top: 100vh; //todo: set to 100vh
+			top: 100vh;
 			left: 0;
 			width: 100vw;
 			height: $pad-right-height;

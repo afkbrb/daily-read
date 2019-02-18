@@ -1,7 +1,6 @@
 <template>
-	<div class="sharePad">
+	<div class="share-pad">
 		<div class="title">分享</div>
-		<div class="list-wrapper">
 			<ul class="list">
 				<li class="item">
 					<div class="icon"><i class="iconfont icon-friends"></i></div>
@@ -24,7 +23,6 @@
 					<div class="text">复制</div>
 				</li>
 			</ul>
-		</div>
 	</div>
 </template>
 
@@ -37,43 +35,40 @@
 <style lang="scss">
 	@import '../../assets/scss/index.scss';
 
-	.sharePad {
+	.share-pad {
 		padding-top: 1.2rem;
 		width: 100%;
 		height: 100%;
 		background: #fefefe;
 		color: #888888;
-		
-		.title{
+
+		.title {
 			text-align: center;
 			font-size: 0.8rem;
 			font-weight: 300;
 		}
-		
-		.list-wrapper{
-			
-			.list{
-				list-style: none;
-				padding-left: 0;
-				display: flex;
-				
-				.item{
-					flex: 1;
-					float: left;
-					
-					.icon{
-						text-align: center;
-						font-size: 2.5rem;
-					}
-					
-					.text{
-						padding-top: 0.6rem;
-						text-align: center;
-						font-size: 0.8rem;
-					}
+
+		.list {
+			list-style: none;
+			padding-left: 0;
+			display: flex;
+
+			.item {
+				flex: 1;
+				float: left;
+
+				.icon {
+					text-align: center;
+					font-size: 2.5rem;
+				}
+
+				.text {
+					padding-top: 0.6rem;
+					text-align: center;
+					font-size: 0.8rem;
 				}
 			}
-			
 		}
+
 	}
 </style>
