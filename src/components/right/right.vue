@@ -7,7 +7,7 @@
 				</div>
 				<div class="text">收藏</div>
 			</li>
-			<li class="item">
+			<li class="item" @click="openBottom">
 				<div class="icon">
 					<i class="iconfont icon-share"></i>
 				</div>
@@ -70,14 +70,21 @@
 			...mapMutations([
 				'updateArticle',
 				'rightToggle',
+				'bottomToggle',
+				'maskToggle',
 				'init'
 			]),
+			openBottom() {
+				this.bottomToggle();
+				this.rightToggle();
+			},
 			getArticleToday() {
 				this.$http.get('https://interface.meiriyiwen.com/article/today?dev=1').then(response => {
 					this.updateArticle(response.body.data);
 					//to prevent the right nav from auto-expanding while initializing
 					if(this.inited) {
 						this.rightToggle();
+						this.maskToggle();
 					}else{
 						this.init();
 					}
@@ -87,12 +94,14 @@
 				this.$http.get('https://interface.meiriyiwen.com/article/random?dev=1').then(response => {
 					this.updateArticle(response.body.data);
 					this.rightToggle();
+					this.maskToggle();
 				});
 			},
 			getArticleByDate(date) {
 				this.$http.get(`https://interface.meiriyiwen.com/article/day?dev=1&date=${date}`).then(response => {
 					this.updateArticle(response.body.data);
 					this.rightToggle();
+					this.maskToggle();
 				});
 			},
 			getArticleYesterday() {

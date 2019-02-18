@@ -3,7 +3,7 @@
 		<span class="left-toggle" @click.stop="leftToggle">
 			<i class="iconfont icon-hamburger"></i>
 		</span>
-		<span class="right-toggle" @click.stop="rightToggle">
+		<span class="right-toggle" @click.stop="openRight">
 			<i class="iconfont icon-more"></i>
 		</span>
 		<div v-show="showHeaderTitle" class="header-title">
@@ -30,8 +30,13 @@
 		methods: {
 			...mapMutations([
 				'leftToggle',
-				'rightToggle'
-			])
+				'rightToggle',
+				'maskToggle'
+			]),
+			openRight() {
+				this.rightToggle();
+				this.maskToggle();
+			}
 		},
 	}
 </script>

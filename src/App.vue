@@ -14,8 +14,12 @@
 		<div class="right" ref="right">
 			<v-nav-right></v-nav-right>
 		</div>
-		<div class="mask" ref="mask" @click="rightToggle"></div>
+		<div class="mask" ref="mask" @click="checkToggleRightOrBottom"></div>
+		<div class="bottom-wrapper" ref="bottom">
+			<v-share-apd></v-share-apd>
+		</div>
 	</div>
+
 </template>
 
 <script>
@@ -26,18 +30,18 @@
 	import navRight from '@/components/right/right';
 	import article from '@/components/article/article';
 	import header from '@/components/header/header';
+	import sharePad from '@/components/bottom/sharePad';
 
 
 	export default {
 		name: 'App',
 		data() {
 			return {
-				// change(s) of navLeftWidth and navRightWidth should alse be applied to
-				//$nav-left-width and &nav-right-width in variable.scss 
-				navLeftWidth: 36,
-				navRightWidth: 20,
-				flagLeft: false,
-				flagRight: false,
+				// change(s) should alse be applied to corresponding variable(s) in variable.scss 
+				navLeftWidth: 36,//vw
+				navRightWidth: 20,//vw
+				padBottomHeight: 26,//vh
+				
 				scrollOffset: 60,
 				showHeaderTitle: false
 			};
@@ -46,53 +50,80 @@
 			...mapState([
 				'article',
 				'navLeftOn',
-				'navRightOn'
+				'navRightOn',
+				'padBottomOn',
+				'maskOn'
 			])
 		},
 		components: {
 			'v-nav-left': navLeft,
 			'v-nav-right': navRight,
 			'v-article': article,
-			'v-header': header
+			'v-header': header,
+			'v-share-apd': sharePad
 		},
 		watch: {
 			navLeftOn(newValue) {
 				let left = this.$refs.left;
 				let main = this.$refs.main;
+				let articleWrapper = this.$refs.articleWrapper;
 				if(newValue) {
 					left.style.left = '0';
 					main.style.left = this.navLeftWidth + 'vw';
-					main.style.overflowY = 'hidden';
+					articleWrapper.style.overflowY = 'hidden';
 				}else{
 					left.style.left = -this.navLeftWidth + 'vw';
 					main.style.left = '0';
-					main.style.overflowY = '';
+					articleWrapper.style.overflowY = '';
 				}
 			},
 			navRightOn(newValue) {
 				let right = this.$refs.right;
-				let mask = this.$refs.mask;
 				let main = this.$refs.main;
 				if(newValue) {
-					mask.style.display = 'block';
 					right.style.left = (100 - this.navRightWidth) + 'vw';
 					main.style.overflowY = 'hidden';
 				} else {
-					mask.style.display = 'none';
 					right.style.left = '100vw';
 					main.style.overflowY = '';
+				}
+			},
+			padBottomOn(newValue) {	
+				let bottom = this.$refs.bottom;
+				if(newValue) {
+					bottom.style.top = (100 - this.padBottomHeight) + 'vh';
+				}else{
+					bottom.style.top = '100vh';
+				}
+			},
+			maskOn(newValue) {
+				let mask = this.$refs.mask;
+				if(newValue) {
+					mask.style.display = 'block';
+				}else{
+					mask.style.display = 'none';
 				}
 			}
 		},
 		methods: {
 			...mapMutations([
 				'leftToggle',
-				'rightToggle'
+				'rightToggle',
+				'bottomToggle',
+				'maskToggle'
 			]),
 			checkToggleLeft() {
 				if (this.navLeftOn) {
 					this.leftToggle();
 				}
+			},
+			checkToggleRightOrBottom() {
+				if (this.navRightOn) {
+					this.rightToggle();
+				}else{
+					this.bottomToggle();
+				}
+				this.maskToggle();
 			},
 			handleScroll() {
 				let scrollTop = this.$refs.articleWrapper.scrollTop;
@@ -110,6 +141,7 @@
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
 		.left {
+			z-index: 200;
 			position: fixed;
 			top: 0;
 			left: -$nav-left-width;
@@ -123,8 +155,8 @@
 			position: absolute;
 			top: 0;
 			left: 0;
-			width: 100%;
-			height: 100%;
+			width: 100vw;
+			height: 100vh;
 			background: $main-color;
 			transition: $left-main-transition;
 
@@ -141,8 +173,6 @@
 				height: 92vh;
 				overflow-y: scroll;
 				&::-webkit-scrollbar{
-					// width: 0;
-					// display: none;
 					width: 0;
 				}
 			}
@@ -158,9 +188,20 @@
 			background: $nav-color;
 			transition: linear 0.2s;
 		}
+		
+		.bottom-wrapper{
+			z-index: 200;
+			position: fixed;
+			top: 100vh; //todo: set to 100vh
+			left: 0;
+			width: 100vw;
+			height: $pad-right-height;
+			transition: ease-out 0.2s;
+		}
 
 		.mask {
-			position: fixed;
+			z-index: 100;
+			position: absolute;
 			display: none;
 			z-index: 100;
 			width: 100%;

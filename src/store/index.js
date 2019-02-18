@@ -9,6 +9,8 @@ Vue.use(Vuex);
 const state = {
 	navLeftOn: false,
 	navRightOn: false,
+	padBottomOn: false,	
+	maskOn: false,
 	inited: false,
 	article: {
 		date: {

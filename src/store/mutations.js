@@ -8,6 +8,12 @@ export default {
 	rightToggle: state => {
 		state.navRightOn = !state.navRightOn;
 	},
+	bottomToggle: state => {
+		state.padBottomOn = !state.padBottomOn;
+	},
+	maskToggle: state => {
+		state.maskOn = !state.maskOn;
+	},
 	init: state => {
 		state.inited = true;
 	}
