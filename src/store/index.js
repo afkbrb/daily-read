@@ -30,6 +30,11 @@ const state = {
 	},
 	//init from localStorage and will be saved to localStrorage when unload
 	collection: collectionStore.fetch(),
+	theme: {
+		fontSize: "medium",
+		themeColor: "white",
+		nightMode: false
+	}
 };
 
 const getters = {

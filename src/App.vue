@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" :class="{'night': theme.nightMode}">
 		<div class="left" ref="left">
 			<v-nav-left></v-nav-left>
 		</div>
@@ -17,7 +17,7 @@
 		<div v-show="leftMaskOn" class="mask left" @click="handleLeft"></div>
 		<div v-show="rightMaskOn" class="mask right" @click="handleRight"></div>
 		<div v-show="bottomMaskOn" class="mask bottom" @click="handleBottom"></div>
-
+		<div v-show="!theme.nightMode" class="mask theme" :class="theme.themeColor"></div>
 	</div>
 
 </template>
@@ -61,7 +61,8 @@
 				'padBottomOn',
 				'leftMaskOn',
 				'rightMaskOn',
-				'bottomMaskOn'
+				'bottomMaskOn',
+				'theme'
 			])
 		},
 		components: {
@@ -74,10 +75,9 @@
 			// for animation
 			$route(to, from) {
 				if (to.meta.index > from.meta.index) {
-					// this.transitionName = 'slide-left';
 					this.transitionName = '';
 				} else {
-					this.transitionName = 'slide-right';
+					this.transitionName = 'fade';
 				}
 			},
 			navLeftOn(newValue) {
@@ -107,10 +107,13 @@
 			},
 			padBottomOn(newValue) {
 				let bottomWrapper = this.$refs.bottomWrapper;
+				let mainWrapper = this.$refs.mainWrapper;
 				if (newValue) {
 					bottomWrapper.style.top = (100 - this.padBottomHeight) + 'vh';
+					mainWrapper.style.overflowY = 'hidden'; //prevent mainWrapper from scrolling
 				} else {
 					bottomWrapper.style.top = '100vh';
+					mainWrapper.style.overflowY = 'hidden'; //prevent mainWrapper from scrolling
 				}
 			}
 		},
@@ -145,6 +148,12 @@
 
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		background: $basic-color;
+
+		&.night {
+			background: $basic-color-night;
+
+		}
 
 		.left {
 			z-index: 200;
@@ -207,36 +216,38 @@
 				background: $bottom-mask-color;
 			}
 
+			&.theme {
+				pointer-events: none;
+			}
+
+			&.white {
+				background: rgba(0, 0, 0, 0);
+			}
+
+			&.green {
+				background: rgba(0, 255, 0, 0.1);
+			}
+
+			&.brown {
+				background: rgba(255, 152, 0, 0.1);
+			}
+
+			&.pink {
+				background: rgba(255, 110, 158, 0.1);
+			}
+
 		}
 
-		.slide-right-enter-active,
-		.slide-right-leave-active,
-		.slide-left-enter-active,
-		.slide-left-leave-active {
-			will-change: transform;
-			transition: all 500ms;
-			position: absolute;
+		.fade-enter-active,
+		.fade-leave-active {
+			transition: opacity .8s
 		}
 
-		.slide-right-enter {
-			opacity: 0;
-			transform: translate3d(-100%, 0, 0);
+		.fade-enter,
+		.fade-leave-active {
+			opacity: 0.7
 		}
 
-		.slide-right-leave-active {
-			opacity: 0;
-			transform: translate3d(100%, 0, 0);
-		}
-
-		.slide-left-enter {
-			opacity: 0;
-			transform: translate3d(100%, 0, 0);
-		}
-
-		.slide-left-leave-active {
-			opacity: 0;
-			transform: translate3d(-100%, 0, 0);
-		}
 
 	}
 </style>

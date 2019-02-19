@@ -1,5 +1,5 @@
 <template>
-	<div class="main">
+	<div class="main" :class="{'night': theme.nightMode}">
 		<div class="header-wrapper">
 			<v-header :showHeaderTitle="showHeaderTitle"></v-header>
 		</div>
@@ -29,7 +29,8 @@
 		},
 		computed: {
 			...mapState([
-				'article'
+				'article',
+				'theme'
 			])
 		},
 		components: {
@@ -50,9 +51,16 @@
 	@import 'assets/scss/index.scss';
 
 	.main {
-		width: 100%;
-		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
 		background: $main-color;
+
+		&.night {
+			background: $main-color-night;
+		}
 
 		.header-wrapper {
 			position: fixed;
@@ -71,5 +79,6 @@
 				width: 0;
 			}
 		}
+
 	}
 </style>

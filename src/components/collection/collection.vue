@@ -1,5 +1,5 @@
 <template>
-	<div class="collection">
+	<div class="collection" :class="{'night': theme.nightMode}">
 		<div class="back" @click="back">
 			<i class="iconfont icon-back"></i>
 		</div>
@@ -21,7 +21,8 @@
 	export default {
 		computed: {
 			...mapState([
-				'collection'
+				'collection',
+				'theme'
 			])
 		},
 		methods: {
@@ -52,6 +53,8 @@
 		width: 100%;
 		height: 100%;
 		overflow-y: scroll;
+		background: $collection-color;
+
 
 		&::-webkit-scrollbar {
 			width: 0;
@@ -87,6 +90,14 @@
 					font-weight: 200;
 					color: #888888;
 				}
+			}
+		}
+
+		&.night {
+			background: $collection-color-night;
+
+			.list .item .title {
+				color: #888888;
 			}
 		}
 	}

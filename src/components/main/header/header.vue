@@ -1,5 +1,5 @@
 <template>
-	<div class="header">
+	<div class="header" :class="{'night': theme.nightMode}">
 		<span class="left-toggle" @click.stop="handleLeftToggle">
 			<i class="iconfont icon-hamburger"></i>
 		</span>
@@ -7,13 +7,16 @@
 			<i class="iconfont icon-more"></i>
 		</span>
 		<div v-show="showHeaderTitle" class="header-title">
-				{{title}}
+			{{title}}
 		</div>
 	</div>
 </template>
 
 <script>
-	import {mapMutations} from 'vuex';
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 
 	export default {
 		props: {
@@ -23,8 +26,11 @@
 			},
 		},
 		computed: {
+			...mapState([
+				'theme'
+			]),
 			title() {
-				return this.$store.getters.articleTitle; 
+				return this.$store.getters.articleTitle;
 			}
 		},
 		methods: {
@@ -58,6 +64,10 @@
 		height: 100%;
 		width: 100%;
 
+		&.night {
+			background: $header-color-night;
+		}
+
 		.left-toggle {
 			position: absolute;
 			top: 2vh;
@@ -69,15 +79,15 @@
 			top: 2vh;
 			right: 4vw;
 		}
-		
-		.header-title{
+
+		.header-title {
 			margin-top: 1rem;
 			display: inline-block;
 			text-align: center;
 			font-size: 0.8rem;
 			font-weight: 100;
 			color: $header-title-color;
-			
+
 		}
 	}
 </style>

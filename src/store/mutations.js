@@ -39,5 +39,14 @@ export default {
 			let item = {title, author, curr};
 			state.collection.push(item);
 		}
+	},
+	setThemeFontSize: (state, fontSize) => {
+		state.theme.fontSize = fontSize;
+	},
+	setThemeColor: (state, color) => {
+		state.theme.themeColor = color;
+	},
+	setThemeNightMode: (state, mode) => {
+		state.theme.nightMode = mode;
 	}
 }
