@@ -1,5 +1,5 @@
 <template>
-	<div class="setting-pad">
+	<div class="setting">
 		<ul class="list">
 			<li class="item">
 				<div class="text">
@@ -44,7 +44,6 @@
 	import mySwitch from 'vue-switch/switch-2.vue';
 
 	export default {
-		name: 'settingPad',
 		data() {
 			return {
 				toggle: true
@@ -58,7 +57,10 @@
 </script>
 
 <style lang="scss">
-	.setting-pad {
+	
+	@import 'assets/scss/index.scss';
+	
+	.setting {
 		width: 100%;
 		height: 100%;
 		background: #fefefe;

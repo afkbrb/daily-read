@@ -7,7 +7,7 @@
 			<li class="item border-1px" @click="handleOpenSetting">
 				<i class="iconfont icon-setting"></i>阅读设置
 			</li>
-			<li class="item border-1px">
+			<li class="item border-1px" @click="redirect">
 				<i class="iconfont icon-good"></i>给个好评
 			</li>
 		</ul>
@@ -34,13 +34,16 @@
 				this.bottomToggle();
 				this.leftMaskToggle();
 				this.bottomMaskToggle();
+			},
+			redirect() {
+				window.location.href = 'https://meiriyiwen.com';
 			}
 		},
 	}
 </script>
 
 <style lang="scss">
-	@import '../../assets/scss/index.scss';
+	@import 'assets/scss/index.scss';
 
 	.nav-left {
 		.list {

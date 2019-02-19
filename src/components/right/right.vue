@@ -46,8 +46,12 @@
 </template>
 
 <script>
-	import {mapMutations} from 'vuex';
-	import {mapState} from 'vuex';
+	import {
+		mapMutations
+	} from 'vuex';
+	import {
+		mapState
+	} from 'vuex';
 
 	export default {
 		name: 'right',
@@ -87,10 +91,10 @@
 				this.$http.get('https://interface.meiriyiwen.com/article/today?dev=1').then(response => {
 					this.updateArticle(response.body.data);
 					//to prevent the right nav from auto-expanding while initializing
-					if(this.inited) {
+					if (this.inited) {
 						this.rightToggle();
 						this.rightMaskToggle();
-					}else{
+					} else {
 						this.init();
 					}
 				});
@@ -135,7 +139,7 @@
 </script>
 
 <style lang="scss">
-	@import '../../assets/scss/index.scss';
+	@import 'assets/scss/index.scss';
 
 	.nav-right {
 		.list {

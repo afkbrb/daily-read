@@ -1,24 +1,24 @@
 <template>
-	<div class="share-pad">
+	<div class="share">
 		<div class="title">分享</div>
 			<ul class="list">
-				<li class="item">
+				<li class="item" @click="showMessage">
 					<div class="icon"><i class="iconfont icon-friends"></i></div>
 					<div class="text">朋友圈</div>
 				</li>
-				<li class="item">
+				<li class="item" @click="showMessage">
 					<div class="icon"><i class="iconfont icon-wechat"></i></div>
 					<div class="text">微信</div>
 				</li>
-				<li class="item">
+				<li class="item" @click="showMessage">
 					<div class="icon"><i class="iconfont icon-space"></i></div>
 					<div class="text">空间</div>
 				</li>
-				<li class="item">
+				<li class="item" @click="showMessage">
 					<div class="icon"><i class="iconfont icon-qq"></i></div>
 					<div class="text">QQ</div>
 				</li>
-				<li class="item">
+				<li class="item" @click="showMessage">
 					<div class="icon"><i class="iconfont icon-copy"></i></div>
 					<div class="text">复制</div>
 				</li>
@@ -28,14 +28,18 @@
 
 <script>
 	export default {
-		name: 'sharePad'
+		methods: {
+			showMessage() {
+				alert("not finished yet due to API issues");
+			}
+		},
 	}
 </script>
 
 <style lang="scss">
-	@import '../../assets/scss/index.scss';
+	@import 'assets/scss/index.scss';
 
-	.share-pad {
+	.share {
 		padding-top: 1.2rem;
 		width: 100%;
 		height: 100%;

@@ -3,21 +3,14 @@
 		<div class="left" ref="left">
 			<v-nav-left></v-nav-left>
 		</div>
-		<div class="main" ref="main">
-			<div class="header-wrapper">
-				<v-header :showHeaderTitle="showHeaderTitle"></v-header>
-			</div>
-			<div class="article-wrapper" ref="articleWrapper" @scroll="handleScroll">
-				<v-article :article="article"></v-article>
-			</div>
+		<div class="main-wrapper" ref="mainWrapper">
+			<v-main></v-main>
 		</div>
 		<div class="right" ref="right">
 			<v-nav-right></v-nav-right>
 		</div>
-		<div class="bottom-wrapper" ref="bottom">
-			<!-- <v-share-pad></v-share-pad> -->
-			<v-setting-pad v-if="bottomContent==='setting'"></v-setting-pad>
-			<v-share-pad v-if="bottomContent==='share'"></v-share-pad>
+		<div class="bottom-wrapper" ref="bottomWrapper">
+			<v-bottom></v-bottom>
 		</div>
 		<div v-show="leftMaskOn" class="mask left" @click="handleLeft"></div>
 		<div v-show="rightMaskOn" class="mask right" @click="handleRight"></div>
@@ -28,15 +21,17 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex';
-	import {mapMutations} from 'vuex';
+	import {
+		mapState
+	} from 'vuex';
+	import {
+		mapMutations
+	} from 'vuex';
 
 	import navLeft from '@/components/left/left';
 	import navRight from '@/components/right/right';
-	import article from '@/components/article/article';
-	import header from '@/components/header/header';
-	import sharePad from '@/components/bottom/sharePad';
-	import settingPad from '@/components/bottom/settingPad';
+	import bottom from '@/components/bottom/bottom';
+	import main from '@/components/main/main';
 
 
 	export default {
@@ -44,18 +39,13 @@
 		data() {
 			return {
 				// change(s) should alse be applied to corresponding variable(s) in variable.scss 
-				navLeftWidth: 36,//vw
-				navRightWidth: 20,//vw
-				padBottomHeight: 26,//vh
-				
-				scrollOffset: 60,
-				showHeaderTitle: false
+				navLeftWidth: 36, //vw
+				navRightWidth: 20, //vw
+				padBottomHeight: 26, //vh
 			};
 		},
 		computed: {
 			...mapState([
-				'bottomContent',
-				'article',
 				'navLeftOn',
 				'navRightOn',
 				'padBottomOn',
@@ -67,43 +57,41 @@
 		components: {
 			'v-nav-left': navLeft,
 			'v-nav-right': navRight,
-			'v-article': article,
-			'v-header': header,
-			'v-share-pad': sharePad,
-			'v-setting-pad': settingPad
+			'v-bottom': bottom,
+			'v-main': main
 		},
 		watch: {
 			navLeftOn(newValue) {
 				let left = this.$refs.left;
-				let main = this.$refs.main;
+				let mainWrapper = this.$refs.mainWrapper;
 				let articleWrapper = this.$refs.articleWrapper;
-				if(newValue) {
+				if (newValue) {
 					left.style.left = '0';
-					main.style.left = this.navLeftWidth + 'vw';
-					articleWrapper.style.overflowY = 'hidden';//prevent main from scrolling
-				}else{
+					mainWrapper.style.left = this.navLeftWidth + 'vw';
+					mainWrapper.style.overflowY = 'hidden'; //prevent mainWrapper from scrolling
+				} else {
 					left.style.left = -this.navLeftWidth + 'vw';
-					main.style.left = '0';
-					articleWrapper.style.overflowY = '';
+					mainWrapper.style.left = '0';
+					mainWrapper.style.overflowY = '';
 				}
 			},
 			navRightOn(newValue) {
 				let right = this.$refs.right;
-				let main = this.$refs.main;
-				if(newValue) {
+				let mainWrapper = this.$refs.mainWrapper;
+				if (newValue) {
 					right.style.left = (100 - this.navRightWidth) + 'vw';
-					main.style.overflowY = 'hidden';//prevent main from scrolling
+					mainWrapper.style.overflowY = 'hidden'; //prevent mainWrapper from scrolling
 				} else {
 					right.style.left = '100vw';
-					main.style.overflowY = '';
+					mainWrapper.style.overflowY = '';
 				}
 			},
-			padBottomOn(newValue) {	
-				let bottom = this.$refs.bottom;
-				if(newValue) {
-					bottom.style.top = (100 - this.padBottomHeight) + 'vh';
-				}else{
-					bottom.style.top = '100vh';
+			padBottomOn(newValue) {
+				let bottomWrapper = this.$refs.bottomWrapper;
+				if (newValue) {
+					bottomWrapper.style.top = (100 - this.padBottomHeight) + 'vh';
+				} else {
+					bottomWrapper.style.top = '100vh';
 				}
 			}
 		},
@@ -116,10 +104,6 @@
 				'rightMaskToggle',
 				'bottomMaskToggle'
 			]),
-			handleScroll() {
-				let scrollTop = this.$refs.articleWrapper.scrollTop;
-				this.showHeaderTitle = (scrollTop >= this.scrollOffset);
-			},
 			handleLeft() {
 				this.leftToggle();
 				this.leftMaskToggle();
@@ -137,8 +121,8 @@
 </script>
 
 <style lang="scss">
-	@import './assets/fonts/iconfont.css';
-	@import './assets/scss/index.scss';
+	@import 'assets/fonts/iconfont.css';
+	@import 'assets/scss/index.scss';
 
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -154,31 +138,13 @@
 			transition: $left-main-transition;
 		}
 
-		.main {
+		.main-wrapper {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100vw;
 			height: 100vh;
-			background: $main-color;
 			transition: $left-main-transition;
-
-			.header-wrapper{
-				position: fixed;
-				top: 0;
-				z-index: 50;
-				height: 3rem;
-				width: 100%;
-			}
-
-			.article-wrapper {
-				margin: 8vh 0.5rem 0 0.5rem;
-				height: 92vh;
-				overflow-y: scroll;
-				&::-webkit-scrollbar{
-					width: 0;
-				}
-			}
 		}
 
 		.right {
@@ -191,8 +157,8 @@
 			background: $nav-color;
 			transition: linear 0.2s;
 		}
-		
-		.bottom-wrapper{
+
+		.bottom-wrapper {
 			z-index: 200;
 			position: fixed;
 			top: 100vh;
@@ -209,19 +175,19 @@
 			height: 100%;
 			left: 0;
 			top: 0;
-			
-			&.left{
+
+			&.left {
 				background: $left-mask-color;
 			}
-			
-			&.right{
+
+			&.right {
 				background: $right-mask-color;
 			}
-			
-			&.bottom{
+
+			&.bottom {
 				background: $bottom-mask-color;
 			}
-			
+
 		}
 	}
 </style>

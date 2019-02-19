@@ -47,7 +47,7 @@
 </script>
 
 <style lang="scss">
-	@import '../../assets/scss/index.scss';
+	@import 'assets/scss/index.scss';
 
 	.header {
 		position: relative;
