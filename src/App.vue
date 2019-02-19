@@ -4,7 +4,9 @@
 			<v-nav-left></v-nav-left>
 		</div>
 		<div class="main-wrapper" ref="mainWrapper">
-			<v-main></v-main>
+			<transition :name="transitionName">
+				<router-view></router-view>
+			</transition>
 		</div>
 		<div class="right" ref="right">
 			<v-nav-right></v-nav-right>
@@ -22,11 +24,12 @@
 
 <script>
 	import {
-		mapState
-	} from 'vuex';
-	import {
+		mapState,
 		mapMutations
 	} from 'vuex';
+
+
+	import collectionStore from '@/utils/collectionStore';
 
 	import navLeft from '@/components/left/left';
 	import navRight from '@/components/right/right';
@@ -36,12 +39,19 @@
 
 	export default {
 		name: 'App',
+		mounted() {
+			window.addEventListener('beforeunload', () => {
+				collectionStore.save(this.$store.state.collection);
+			});
+		},
 		data() {
 			return {
 				// change(s) should alse be applied to corresponding variable(s) in variable.scss 
 				navLeftWidth: 36, //vw
 				navRightWidth: 20, //vw
 				padBottomHeight: 26, //vh
+
+				transitionName: ''
 			};
 		},
 		computed: {
@@ -61,6 +71,15 @@
 			'v-main': main
 		},
 		watch: {
+			// for animation
+			$route(to, from) {
+				if (to.meta.index > from.meta.index) {
+					// this.transitionName = 'slide-left';
+					this.transitionName = '';
+				} else {
+					this.transitionName = 'slide-right';
+				}
+			},
 			navLeftOn(newValue) {
 				let left = this.$refs.left;
 				let mainWrapper = this.$refs.mainWrapper;
@@ -189,5 +208,35 @@
 			}
 
 		}
+
+		.slide-right-enter-active,
+		.slide-right-leave-active,
+		.slide-left-enter-active,
+		.slide-left-leave-active {
+			will-change: transform;
+			transition: all 500ms;
+			position: absolute;
+		}
+
+		.slide-right-enter {
+			opacity: 0;
+			transform: translate3d(-100%, 0, 0);
+		}
+
+		.slide-right-leave-active {
+			opacity: 0;
+			transform: translate3d(100%, 0, 0);
+		}
+
+		.slide-left-enter {
+			opacity: 0;
+			transform: translate3d(100%, 0, 0);
+		}
+
+		.slide-left-leave-active {
+			opacity: 0;
+			transform: translate3d(-100%, 0, 0);
+		}
+
 	}
 </style>

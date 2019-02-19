@@ -28,5 +28,16 @@ export default {
 	},
 	openShare: state => {
 		state.bottomContent = 'share';
+	},
+	articleLikeToggle: state => {
+		if(state.collection.map(item => item.curr).indexOf(state.article.date.curr) > -1) {
+			state.collection.splice(state.collection.map(item => item.curr).indexOf(state.article.date.curr), 1);
+		}else{
+			let title = state.article.title;
+			let author = state.article.author;
+			let curr = state.article.date.curr;
+			let item = {title, author, curr};
+			state.collection.push(item);
+		}
 	}
 }

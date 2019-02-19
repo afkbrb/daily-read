@@ -1,13 +1,13 @@
 <template>
 	<div class="nav-right">
 		<ul class="list">
-			<li class="item">
-				<div class="icon">
+			<li class="item" @click="handleLike">
+				<div class="icon" :class="{'liked': articleLiked}">
 					<i class="iconfont icon-like"></i>
 				</div>
 				<div class="text">收藏</div>
 			</li>
-			<li class="item" @click="handleOpenShare">
+			<li class="item" @click="handleShare">
 				<div class="icon">
 					<i class="iconfont icon-share"></i>
 				</div>
@@ -52,6 +52,11 @@
 	import {
 		mapState
 	} from 'vuex';
+	import {
+		mapGetters
+	} from 'vuex';
+	
+	import store from '@/utils/collectionStore';
 
 	export default {
 		name: 'right',
@@ -61,13 +66,23 @@
 		},
 		computed: {
 			...mapState([
-				'inited'
+				'inited',
+			]),
+			...mapGetters([
+				'articleLiked',
+				'articleCurr'
 			]),
 			showToday() {
-				return this.today !== this.$store.state.article.date.curr;
+				return this.today !== this.articleCurr;
 			},
 			showTomorrow() {
-				return parseInt(this.today) > parseInt(this.$store.state.article.date.curr);
+				return parseInt(this.today) > parseInt(this.articleCurr);
+			},
+			liked() {
+				let list = store.fetch();
+				let currs = list.map(item => item.curr);
+				console.log(currs);
+				return currs.indexOf(this.article.date.curr) >= 0;
 			}
 		},
 		methods: {
@@ -78,9 +93,15 @@
 				'bottomToggle',
 				'rightMaskToggle',
 				'bottomMaskToggle',
-				'openShare'
+				'openShare',
+				'articleLikeToggle'
 			]),
-			handleOpenShare() {
+			handleLike() {
+				this.articleLikeToggle();
+				this.rightToggle();
+				this.rightMaskToggle();
+			},
+			handleShare() {
 				this.openShare();
 				this.bottomToggle();
 				this.rightToggle();
@@ -154,6 +175,10 @@
 				.icon {
 					color: $nav-icon-color;
 					font-size: 2rem;
+					
+					&.liked{
+						color: red;
+					}
 				}
 
 				.text {

@@ -1,13 +1,13 @@
 <template>
 	<div class="nav-left">
 		<ul class="list">
-			<li class="item border-1px">
+			<li class="item border-1px" @click="handleCollection">
 				<i class="iconfont icon-tag"></i>我的收藏
 			</li>
-			<li class="item border-1px" @click="handleOpenSetting">
+			<li class="item border-1px" @click="handleSetting">
 				<i class="iconfont icon-setting"></i>阅读设置
 			</li>
-			<li class="item border-1px" @click="redirect">
+			<li class="item border-1px" @click="handlePraise">
 				<i class="iconfont icon-good"></i>给个好评
 			</li>
 		</ul>
@@ -15,9 +15,10 @@
 </template>
 
 <script>
-	
-	import {mapMutations} from 'vuex';
-	
+	import {
+		mapMutations
+	} from 'vuex';
+
 	export default {
 		name: 'left',
 		methods: {
@@ -28,15 +29,20 @@
 				'leftMaskToggle',
 				'bottomMaskToggle'
 			]),
-			handleOpenSetting() {
+			handleSetting() {
 				this.openSetting();
 				this.leftToggle();
 				this.bottomToggle();
 				this.leftMaskToggle();
 				this.bottomMaskToggle();
 			},
-			redirect() {
+			handlePraise() {
 				window.location.href = 'https://meiriyiwen.com';
+			},
+			handleCollection() {
+				this.$router.push('/collection');
+				this.leftToggle();
+				this.leftMaskToggle();
 			}
 		},
 	}
