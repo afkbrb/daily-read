@@ -18,19 +18,6 @@ npm run build
 ```
 
 ## Screenshot
-</br>
-
-<tr>
-<td>![](./screenshot/1.png)</td>
-<td>![](./screenshot/2.png)</td>
-<td>![](./screenshot/3.png)</td>
-<td>![](./screenshot/4.png)</td>
-</tr>
-<tr>
-<td>![](./screenshot/5.png)</td>
-<td>![](./screenshot/6.png)</td>
-<td>![](./screenshot/7.png)</td>
-<td>![](./screenshot/8.png)</td>
-</tr>
+See [screenshot](https://github.com/2w6f8c/daily-read/tree/master/screenshot)
 
 
