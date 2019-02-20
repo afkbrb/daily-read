@@ -53,11 +53,12 @@
 	} from 'vuex';
 	
 	import store from '@/utils/collectionStore';
+	import {getFormatDateToday} from '@/utils/basic';
 
 	export default {
 		name: 'right',
 		created() {
-			this.today = this.getFormatDateToday();
+			this.today = getFormatDateToday();
 			this.getArticleToday();
 		},
 		computed: {
@@ -137,19 +138,6 @@
 			getArticleTomorrow() {
 				let date = this.$store.state.article.date.next;
 				this.getArticleByDate(date);
-			},
-			getFormatDateToday() {
-				let date = new Date();
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let day = date.getDate();
-				if (month >= 1 && month <= 9) {
-					month = "0" + month;
-				};
-				if (day >= 0 && day <= 9) {
-					day = "0" + day;
-				};
-				return (year + month + day);
 			}
 		},
 	}

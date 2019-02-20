@@ -76,19 +76,19 @@
 		}
 	
 		&.white {
-			background: rgba(0, 0, 0, 0);
+			background: $mask-color-white;
 		}
 	
 		&.green {
-			background: rgba(0, 255, 0, 0.1);
+			background: $mask-color-green;
 		}
 	
 		&.brown {
-			background: rgba(255, 152, 0, 0.1);
+			background: $mask-color-brown;
 		}
 	
 		&.pink {
-			background: rgba(255, 110, 158, 0.1);
+			background: $mask-color-pink;
 		}
 	
 	}

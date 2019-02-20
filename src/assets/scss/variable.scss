@@ -1,8 +1,3 @@
-//width/height change(s) should alse be applied to the corresponding variable(s) in App.vue
-$nav-left-width: 36vw;
-$nav-right-width: 20vw;
-$pad-bottom-height: 26vh;
-
 // color
 $basic-color: #fbfbfb;
 $basic-color-night: #3f414b;
@@ -25,6 +20,15 @@ $article-foot-color: #888888;
 $article-foot-border-color: rgba(7,17,27,0.1);
 $collection-color: $basic-color;
 $collection-color-night: $basic-color-night;
+$mask-color-white: rgba(0, 0, 0, 0);
+$mask-color-green: rgba(0, 255, 0, 0.1);
+$mask-color-brown: rgba(255, 152, 0, 0.1);
+$mask-color-pink: rgba(255, 110, 158, 0.1);
 
 //transition
-$left-main-transition: linear 0.2s;;
+$left-main-transition: linear 0.2s;
+
+//width/height change(s) should alse be applied to the corresponding variable(s) in App.vue
+$nav-left-width: 36vw;
+$nav-right-width: 20vw;
+$pad-bottom-height: 26vh;
