@@ -1,6 +1,8 @@
 # daily-read
 
-> A Vue.js project
+> A **FAKE** read app based on Vue.js
+> Modle after [观止](https://www.wandoujia.com/apps/com.meiriyiwen.app)
+> API Support: [https://github.com/jokermonn/-Api/blob/master/OneArticle.md](https://github.com/jokermonn/-Api/blob/master/OneArticle.md)
 
 ## Build Setup
 
@@ -13,18 +15,22 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Screenshot
+</br>
+
+<tr>
+<td>![](./screenshot/1.png)</td>
+<td>![](./screenshot/2.png)</td>
+<td>![](./screenshot/3.png)</td>
+<td>![](./screenshot/4.png)</td>
+</tr>
+<tr>
+<td>![](./screenshot/5.png)</td>
+<td>![](./screenshot/6.png)</td>
+<td>![](./screenshot/7.png)</td>
+<td>![](./screenshot/8.png)</td>
+</tr>
+
+
