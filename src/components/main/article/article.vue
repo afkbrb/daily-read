@@ -154,7 +154,7 @@
 		}
 
 		&.night{
-			background: #3f414b;
+			background: $basic-color-night;
 			
 			.title{
 				color: #747474;

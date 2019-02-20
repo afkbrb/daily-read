@@ -1,5 +1,5 @@
 <template>
-	<div id="app" :class="{'night': theme.nightMode}">
+	<div id="app" class="app" :class="{'night': theme.nightMode}">
 		<div class="left" ref="left">
 			<v-nav-left></v-nav-left>
 		</div>
@@ -14,12 +14,8 @@
 		<div class="bottom-wrapper" ref="bottomWrapper">
 			<v-bottom></v-bottom>
 		</div>
-		<div v-show="leftMaskOn" class="mask left" @click="handleLeft"></div>
-		<div v-show="rightMaskOn" class="mask right" @click="handleRight"></div>
-		<div v-show="bottomMaskOn" class="mask bottom" @click="handleBottom"></div>
-		<div v-show="!theme.nightMode" class="mask theme" :class="theme.themeColor"></div>
+		<v-mask></v-mask>
 	</div>
-
 </template>
 
 <script>
@@ -35,12 +31,14 @@
 	import navRight from '@/components/right/right';
 	import bottom from '@/components/bottom/bottom';
 	import main from '@/components/main/main';
+	import mask from '@/components/mask/mask';
 
 
 	export default {
 		name: 'App',
 		mounted() {
 			window.addEventListener('beforeunload', () => {
+				// dump collection to localStorage
 				collectionStore.save(this.$store.state.collection);
 			});
 		},
@@ -50,7 +48,7 @@
 				navLeftWidth: 36, //vw
 				navRightWidth: 20, //vw
 				padBottomHeight: 26, //vh
-
+				//transition
 				transitionName: ''
 			};
 		},
@@ -59,9 +57,6 @@
 				'navLeftOn',
 				'navRightOn',
 				'padBottomOn',
-				'leftMaskOn',
-				'rightMaskOn',
-				'bottomMaskOn',
 				'theme'
 			])
 		},
@@ -69,7 +64,8 @@
 			'v-nav-left': navLeft,
 			'v-nav-right': navRight,
 			'v-bottom': bottom,
-			'v-main': main
+			'v-main': main,
+			'v-mask': mask
 		},
 		watch: {
 			// for animation
@@ -116,28 +112,6 @@
 					mainWrapper.style.overflowY = 'hidden'; //prevent mainWrapper from scrolling
 				}
 			}
-		},
-		methods: {
-			...mapMutations([
-				'leftToggle',
-				'rightToggle',
-				'bottomToggle',
-				'leftMaskToggle',
-				'rightMaskToggle',
-				'bottomMaskToggle'
-			]),
-			handleLeft() {
-				this.leftToggle();
-				this.leftMaskToggle();
-			},
-			handleRight() {
-				this.rightToggle();
-				this.rightMaskToggle();
-			},
-			handleBottom() {
-				this.bottomToggle();
-				this.bottomMaskToggle();
-			}
 		}
 	}
 </script>
@@ -146,13 +120,12 @@
 	@import 'assets/fonts/iconfont.css';
 	@import 'assets/scss/index.scss';
 
-	#app {
+	.app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		background: $basic-color;
 
 		&.night {
 			background: $basic-color-night;
-
 		}
 
 		.left {
@@ -192,52 +165,11 @@
 			top: 100vh;
 			left: 0;
 			width: 100vw;
-			height: $pad-right-height;
+			height: $pad-bottom-height;
 			transition: ease-out 0.2s;
 		}
 
-		.mask {
-			z-index: 100;
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			left: 0;
-			top: 0;
-
-			&.left {
-				background: $left-mask-color;
-			}
-
-			&.right {
-				background: $right-mask-color;
-			}
-
-			&.bottom {
-				background: $bottom-mask-color;
-			}
-
-			&.theme {
-				pointer-events: none;
-			}
-
-			&.white {
-				background: rgba(0, 0, 0, 0);
-			}
-
-			&.green {
-				background: rgba(0, 255, 0, 0.1);
-			}
-
-			&.brown {
-				background: rgba(255, 152, 0, 0.1);
-			}
-
-			&.pink {
-				background: rgba(255, 110, 158, 0.1);
-			}
-
-		}
-
+		//transition
 		.fade-enter-active,
 		.fade-leave-active {
 			transition: opacity .8s
@@ -247,7 +179,6 @@
 		.fade-leave-active {
 			opacity: 0.7
 		}
-
 
 	}
 </style>
