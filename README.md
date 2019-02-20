@@ -6,6 +6,9 @@
 
 - API Support: [https://github.com/jokermonn/-Api/blob/master/OneArticle.md](https://github.com/jokermonn/-Api/blob/master/OneArticle.md)
 
+## Screenshot
+See [screenshot](https://github.com/2w6f8c/daily-read/tree/master/screenshot)
+
 ## Build Setup
 
 ``` bash
@@ -19,7 +22,6 @@ npm run dev
 npm run build
 ```
 
-## Screenshot
-See [screenshot](https://github.com/2w6f8c/daily-read/tree/master/screenshot)
+
 
 
