@@ -1,4 +1,4 @@
-# 📖daily-read
+# 📖 daily-read
 
 - A **FAKE** read app based on Vue.js
 
@@ -6,13 +6,13 @@
 
 - API Support: [https://github.com/jokermonn/-Api/blob/master/OneArticle.md](https://github.com/jokermonn/-Api/blob/master/OneArticle.md)
 
-## 👀Preview
+## 👀 Preview
 [2w6f8c.top:8081](http://2w6f8c.top:8081)
 
-## 🔳Screenshot
+## 🔳 Screenshot
 See [screenshot](https://github.com/2w6f8c/daily-read/tree/master/screenshot)
 
-## ⚙Build Setup
+## ⚙ Build Setup
 
 ``` bash
 # install dependencies
