@@ -7,7 +7,7 @@
 - API Support: [https://github.com/jokermonn/-Api/blob/master/OneArticle.md](https://github.com/jokermonn/-Api/blob/master/OneArticle.md)
 
 ## 👀 Preview
-[git.afkbrb.top/daily-read](http://git.afkbrb.top/daily-read)
+[git.afkbrb.top/daily-read](http://afkbrb.github.io/daily-read)
 
 ## 🔳 Screenshot
 See [screenshot](https://github.com/2w6f8c/daily-read/tree/master/screenshot)
